@@ -163,9 +163,9 @@ GameManager.prototype.move = function (direction) {
     }
 
     this.actuate();
-    setTimeout(function() { move(-1); }, 300);
+    setTimeout(function() { move(-1); }, wait);
   } else {
-      setTimeout(function() { move(direction); }, 300);
+      setTimeout(function() { move(direction); }, wait/3);
   }
   
   

@@ -1,6 +1,6 @@
 function GameModel(size, score, startGrid) {
   this.size         = size; // Size of the grid
-
+  this.couldMove = true;
   this.startTiles   = 2;
 
   this.setup(startGrid, score);
@@ -70,6 +70,7 @@ GameModel.prototype.LEFT = 3;
 
 // Move tiles on the grid in the specified direction
 GameModel.prototype.move = function (direction) {
+    this.couldMove = true;
   // 0: up, 1: right, 2:down, 3: left
   var self = this;
 
@@ -127,8 +128,14 @@ GameModel.prototype.move = function (direction) {
     if (!this.movesAvailable()) {
       this.over = true; // Game over!
     }
+  } else {
+      this.couldMove = false;
   }
 };
+
+GameModel.prototype.lost = function() {
+    return this.over && !this.won;
+}
 
 // Get the vector representing the chosen direction
 GameModel.prototype.getVector = function (direction) {
