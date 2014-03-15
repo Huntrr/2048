@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>2048</title>
+  <title>2048-AI</title>
 
   <link href="style/main.css" rel="stylesheet" type="text/css">
   <link rel="shortcut icon" href="favicon.ico">
@@ -67,8 +67,14 @@
     
     <div id="controls">
         <input type="button" onclick="playAI();" value="Play" />
-        Steps: <input type="number" style="width: 40px;" id="steps" value="10" />
+        Steps: <input type="number" style="width: 40px;" id="steps" value="5" />
         <input type="button" onclick="pauseAI();" value="Pause" />
+        <br><br>
+        Script: 
+        <select id="ai" onchange="changeScript();">
+            <option>Recursive</option>
+            <option>Random</option>
+        </select>
     </div>
 
     <p class="game-explanation">
@@ -76,11 +82,13 @@
     </p>
     <hr>
     <p>
-    <strong class="important">Note:</strong> This site is the official version of 2048. You can play it on your phone via <a href="http://git.io/2048">http://git.io/2048.</a> All other apps or sites are derivatives or fakes, and should be used with caution.
+    <strong class="important">Note:</strong> This site is a derivative of the original 2048, by <a href="http://gabrielecirulli.com" target="_blank">Gabriele Cirulli</a> (which you can find <a href='http://gabrielecirulli.github.io/2048/'>here</a>). This site serves as a testing ground for various algorithms meant to 'beat' the game by optimizing the chances of success. All mechanics have been kept the same, with the only changes to the original code being several interfaces to allow other scripts to see the state of the game and send input to the game.
     </p>
     <hr>
     <p>
-    Created by <a href="http://gabrielecirulli.com" target="_blank">Gabriele Cirulli.</a> Based on <a href="https://itunes.apple.com/us/app/1024!/id823499224" target="_blank">1024 by Veewo Studio</a> and conceptually similar to <a href="http://asherv.com/threes/" target="_blank">Threes by Asher Vollmer.</a>
+    Forked by <a href='http://hunterlightman.com'>Hunter Lightman</a>
+    <br>
+    Based off <a href="http://gabrielecirulli.com" target="_blank">Gabriele Cirulli</a>'s original <a href="https://github.com/gabrielcirulli/2048">code</a> based on <a href="https://itunes.apple.com/us/app/1024!/id823499224" target="_blank">1024 by Veewo Studio</a> and conceptually similar to <a href="http://asherv.com/threes/" target="_blank">Threes by Asher Vollmer.</a>
     </p>
   </div>
 

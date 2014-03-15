@@ -25,7 +25,7 @@ Grid.prototype.build = function (start) {
   if(typeof start !== 'undefined') {
     for (var x = 0; x < this.size; x++) {
       for (var y = 0; y < this.size; y++) {
-        this.cells[x][y] = start[x][y];
+        this.cells[x][y] = (start[x][y] !== null ? new Tile({x: x, y: y}, start[x][y].value) : null);
       }
     }
   }
