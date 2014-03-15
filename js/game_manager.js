@@ -165,7 +165,7 @@ GameManager.prototype.move = function (direction) {
     this.actuate();
   }
   
-  move();
+  setTimeout(function() { move(); }, 300);
 };
 
 // Get the vector representing the chosen direction
