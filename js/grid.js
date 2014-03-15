@@ -1,18 +1,32 @@
-function Grid(size) {
+function Grid(size, start) {
   this.size = size;
 
   this.cells = [];
 
-  this.build();
+  this.build(start);
+}
+
+Grid.prototype.getCells = function () {
+    return this.cells;
 }
 
 // Build a grid of the specified size
-Grid.prototype.build = function () {
-  for (var x = 0; x < this.size; x++) {
-    var row = this.cells[x] = [];
-
-    for (var y = 0; y < this.size; y++) {
-      row.push(null);
+Grid.prototype.build = function (start) {
+  if(true) {
+    for (var x = 0; x < this.size; x++) {
+      var row = this.cells[x] = [];
+    
+      for (var y = 0; y < this.size; y++) {
+        row.push(null);
+      }
+    }
+  } 
+  
+  if(typeof start !== 'undefined') {
+    for (var x = 0; x < this.size; x++) {
+      for (var y = 0; y < this.size; y++) {
+        this.cells[x][y] = start[x][y];
+      }
     }
   }
 };
@@ -40,6 +54,7 @@ Grid.prototype.availableCells = function () {
 
 // Call callback for every cell
 Grid.prototype.eachCell = function (callback) {
+    
   for (var x = 0; x < this.size; x++) {
     for (var y = 0; y < this.size; y++) {
       callback(x, y, this.cells[x][y]);

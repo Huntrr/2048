@@ -23,7 +23,7 @@
       </div>
     </div>
     <p class="game-intro">Join the numbers and get to the <strong>2048 tile!</strong></p>
-
+    
     <div class="game-container">
       <div class="game-message">
         <p></p>
@@ -64,6 +64,12 @@
 
       </div>
     </div>
+    
+    <div id="controls">
+        <input type="button" onclick="playAI();" value="Play" />
+        Steps: <input type="number" style="width: 40px;" id="steps" value="10" />
+        <input type="button" onclick="pauseAI();" value="Pause" />
+    </div>
 
     <p class="game-explanation">
       <strong class="important">How to play:</strong> Use your <strong>arrow keys</strong> to move the tiles. When two tiles with the same number touch, they <strong>merge into one!</strong>
@@ -78,6 +84,8 @@
     </p>
   </div>
 
+  <script src="js/model.js"></script>
+  <script src="js/ai.js"></script>
   <script src="js/animframe_polyfill.js"></script>
   <script src="js/keyboard_input_manager.js"></script>
   <script src="js/html_actuator.js"></script>

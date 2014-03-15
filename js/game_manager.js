@@ -47,6 +47,9 @@ GameManager.prototype.setup = function () {
 
   // Update the actuator
   this.actuate();
+  
+  // Call for a move
+  move();
 };
 
 // Set up the initial tiles to start the game with
@@ -161,6 +164,8 @@ GameManager.prototype.move = function (direction) {
 
     this.actuate();
   }
+  
+  move();
 };
 
 // Get the vector representing the chosen direction
