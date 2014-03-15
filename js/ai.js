@@ -109,12 +109,12 @@ function getWeightedRandomMove() {
 
 function notDown() {
     var moves = [];
+    
     for(var i = 0; i < 3; i++) {
         if(canMove(gameManager, i)) {
             moves.push(i);
         }
     }
-    
     if(contains(moves, 0) || contains(moves, 1) || contains(moves, 3)) {
         if(contains(moves, 0) && contains(moves, 1)) {
             return Math.floor(Math.random() * 2);
@@ -144,7 +144,8 @@ function contains(array, val) {
 }
 
 function canMove(model, direction) {
-    model = clone(model);
-    model.move(direction);
-    return model.couldMove();
+    var gmodel = clone(model);
+    
+    gmodel.move(direction);
+    return gmodel.couldMove;
 }
