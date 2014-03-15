@@ -1,3 +1,4 @@
+/* GLOBALS */
 var playing = false;
 var steps = 10;
 var gameManager;
@@ -5,7 +6,7 @@ var maxScore = 9001;
 var script = 'Recursive';
 var wait = 200;
 
-//playAI();
+/* CORE */
 function playAI() {
     playing = true;
     changeSteps();
@@ -32,11 +33,21 @@ function updateWait() {
     wait = parseInt(document.getElementById('wait').value) || 200;
 }
 
-function clone(obj) {
-    var obj = new GameModel(gameManager.size, gameManager.score, gameManager.grid.getCells());
-    return obj;
+/* MOVE */
+function move(dont) {
+    if(playing) {
+        if(script === 'Recursive') {
+            gameManager.move(calcBestMove(clone(gameManager), -1, steps, dont)['move']);
+        } else if(script === 'Random') {
+            gameManager.move(getRandomMove());
+        } else if(script === 'Never Down') {
+            gameManager.move(notDown());
+        }
+    }
 }
 
+
+/* ALGORITHMS */
 function calcBestMove(model, move, stepsLeft, dont) {
     var score = model.score;
     if(move !== -1) { model.move(move) } ;
@@ -96,12 +107,44 @@ function getWeightedRandomMove() {
     return 3;
 }
 
-function move(dont) {
-    if(playing) {
-        if(script === 'Recursive') {
-            gameManager.move(calcBestMove(clone(gameManager), -1, steps, dont)['move']);
-        } else if(script === 'Random') {
-            gameManager.move(getRandomMove());
+function notDown() {
+    var moves = [];
+    for(var i = 0; i < 3; i++) {
+        if(canMove(gameManager, i)) {
+            moves.push(i);
         }
     }
+    
+    if(contains(moves, 0) || contains(moves, 1) || contains(moves, 3)) {
+        if(contains(moves, 0) && contains(moves, 1)) {
+            return Math.floor(Math.random() * 2);
+        } else if(contains(moves, 1)) {
+            return 1;
+        } else {
+            return 3;
+        }
+    } else {
+        return 2;
+    }
+}
+
+
+
+
+
+
+/* HELPERS */
+function clone(obj) {
+    var obj = new GameModel(gameManager.size, gameManager.score, gameManager.grid.getCells());
+    return obj;
+}
+
+function contains(array, val) {
+    return array.indexOf(val) > -1;
+}
+
+function canMove(model, direction) {
+    model = clone(model);
+    model.move(direction);
+    return model.couldMove();
 }
