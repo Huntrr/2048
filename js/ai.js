@@ -37,7 +37,6 @@ function calcBestMove(model, move, stepsLeft, dont) {
     var curMove;
     for(var iter = 0; iter < 4; iter++) { //cycle through all moves
         if(iter !== dont) {
-            alert(stepsLeft);
             curMove = calcBestMove(clone(model), iter, stepsLeft - 1, -1);
             if(curMove['score'] > winningMove['score']) {
                 winningMove = {score: curMove.score, move: iter};
