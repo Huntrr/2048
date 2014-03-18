@@ -101,7 +101,6 @@ function calcBestMove(model, move, stepsLeft, dont) {
         }
     }
     
-    model.score = score + model.score / (steps - stepsLeft + 1);
     if(move === 2) { model.score -= model.score / (steps - stepsLeft + 1); }
     
     if(model.lost()) {
@@ -112,7 +111,7 @@ function calcBestMove(model, move, stepsLeft, dont) {
         return {score: ((!model.won) ? model.score : maxScore), move: move}
     }
     
-    if(model.won) { return { score: maxScore, move: move }; }
+    if(model.won) { return { score: maxScore + stepsLeft, move: move }; }
     
     var winningMove = {score: model.score, move: -1};
     var curMove;
