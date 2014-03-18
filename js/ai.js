@@ -2,7 +2,7 @@
 var playing = false;
 var steps = 10;
 var gameManager;
-var maxScore = 9001;
+var maxScore = 100000;
 var script = 'Recursive';
 var wait = 200;
 
@@ -42,12 +42,52 @@ function move(dont) {
             gameManager.move(getRandomMove());
         } else if(script === 'Never Down') {
             gameManager.move(notDown());
+        } else if(script === 'Degrading Recursion') {
+            gameManager.move(calcBestMoveDegrade(clone(gameManager), -1, 0, steps, 0)['move']);
         }
     }
 }
 
 
 /* ALGORITHMS */
+//Degrading Recursion
+function calcBestMoveDegrade(model, move, step, maxSteps, score) {
+    var score = model.score;
+    if(move !== -1) { model.move(move) } ;
+    
+    if(model.score === score && step > 0) { 
+        if(!model.couldMove) {
+            return {score: model.score, move: move};
+        }
+    }
+    
+    if(model.lost()) {
+        return {score: score, move: move};
+    }
+    
+    if(maxSteps - step < 1) {
+        return {score: ((!model.won) ? (score + model.score/step)  : maxScore - step*10), move: move}
+    }
+    
+    if(model.won) { return { score: maxScore, move: move }; }
+    
+    var winningMove = {score: (score + model.score/step), move: -1};
+    var curMove;
+    for(var iter = 0; iter < 4; iter++) { //cycle through all moves
+            curMove = calcBestMoveDegrade(clone(model), iter, step + 1, steps, model.score/step + score);
+            if(curMove['score'] > winningMove['score']) {
+                winningMove = {score: curMove.score, move: iter};
+            }
+    }
+    
+    if(winningMove['move'] === -1) {
+        return {score: maxScore, move: getWeightedRandomMove()};
+    }
+    
+    return winningMove;
+}
+
+//Recursive
 function calcBestMove(model, move, stepsLeft, dont) {
     var score = model.score;
     if(move !== -1) { model.move(move) } ;
@@ -86,10 +126,12 @@ function calcBestMove(model, move, stepsLeft, dont) {
     return winningMove;
 }
 
+//Total randomness
 function getRandomMove() {
     return Math.floor(Math.random()*4);
 }
 
+//Weighted random
 function getWeightedRandomMove() {
     var rand = Math.floor(Math.random()*100);
     
@@ -107,6 +149,7 @@ function getWeightedRandomMove() {
     return 3;
 }
 
+//Anything but down
 function notDown() {
     var moves = [];
     
