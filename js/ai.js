@@ -102,7 +102,7 @@ function calcBestMove(model, move, stepsLeft, dont) {
     }
     
     model.score = score + model.score / (steps - stepsLeft + 1);
-    if(move === 2) { model.score -= model.score / (steps - stepsLeft + 1);
+    if(move === 2) { model.score -= model.score / (steps - stepsLeft + 1); }
     
     if(model.lost()) {
         return {score: score, move: move};
