@@ -82,7 +82,7 @@ function calcBestMoveDegrade(model, move, step, maxSteps, score) {
     }
     
     if(winningMove['move'] === -1) {
-        return {score: maxScore, move: getWeightedRandomMove()};
+        return {score: maxScore - step*10, move: getWeightedRandomMove()};
     }
     
     return winningMove;
@@ -92,6 +92,8 @@ function calcBestMoveDegrade(model, move, step, maxSteps, score) {
 function calcBestMove(model, move, stepsLeft, dont) {
     var score = model.score;
     if(move !== -1) { model.move(move) } ;
+    if(move === 3) { return {score: model.score, move: move}; }
+    
     
     if(model.score === score && stepsLeft !== steps) { 
         if(!model.couldMove) {
