@@ -54,7 +54,7 @@ function move(dont) {
 function calcBestMoveDegrade(model, move, step, maxSteps, score) {
     var score = model.score;
     if(move !== -1) { model.move(move) } ;
-    if(move === 3) { return {score: model.score/step + score, move: move }
+    if(move === 3) { return {score: model.score/step + score, move: move }; }
     
     if(model.score === score && step > 0) { 
         if(!model.couldMove) {
