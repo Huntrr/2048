@@ -43,7 +43,7 @@ function move(dont) {
         } else if(script === 'Never Down') {
             gameManager.move(notDown());
         } else if(script === 'Degrading Recursion') {
-            gameManager.move(calcBestMoveDegrade(clone(gameManager), -1, 0, steps, 0)['move']);
+            gameManager.move(calcBestMoveDegrade(clone(gameManager), -1, steps, dont)['move']);
         }
     }
 }
