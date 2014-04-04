@@ -54,25 +54,26 @@ function move(dont) {
 function calcBestMoveDegrade(model, move, step, maxSteps, score) {
     var score = model.score;
     if(move !== -1) { model.move(move) } ;
-    if(move === 3) { return {score: model.score/step + score, move: move }; }
+    var newScore = model.score * (maxSteps - step);
+    if(move === 3) { return {score: newScore/step + score, move: move }; }
     
     if(model.score === score && step > 0) { 
         if(!model.couldMove) {
-            return {score: model.score, move: move};
+            return {score: newScore, move: move};
         }
     }
     
     if(model.lost()) {
-        return {score: score, move: move};
+        return {score: newScore, move: move};
     }
     
     if(maxSteps - step < 1) {
-        return {score: ((!model.won) ? (score + model.score/step)  : maxScore - step*10), move: move}
+        return {score: ((!model.won) ? (newScore)  : maxScore - step*10), move: move}
     }
     
     if(model.won) { return { score: maxScore, move: move }; }
     
-    var winningMove = {score: (score + model.score/step), move: -1};
+    var winningMove = {score: (newScore), move: -1};
     var curMove;
     for(var iter = 0; iter < 4; iter++) { //cycle through all moves
             curMove = calcBestMoveDegrade(clone(model), iter, step + 1, steps, model.score/step + score);
