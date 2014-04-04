@@ -24,11 +24,24 @@ GameModel.prototype.isGameTerminated = function () {
   }
 };
 
+GameModel.prototype.getHighestTile = function () {
+  var cells = this.grid.getCells();
+  var length = cells.length;
+  var highestTile = 2;
+  for(var i = 0; i < length; i++) {
+    if(cells[i].value && cells[i].value > highestTile) {
+      highestTile = cells[i].value
+    }
+  }
+  
+  return highestTile;
+}
+
 // Set up the game
 GameModel.prototype.setup = function (startGrid, score) {
   this.grid        = new Grid(this.size, startGrid);
 
-  this.score       = score;
+  this.score       = getHighestTile();
   this.over        = false;
   this.won         = false;
   this.keepPlaying = false;
