@@ -51,39 +51,44 @@ function move(dont) {
 
 /* ALGORITHMS */
 //Degrading Recursion
-function calcBestMoveDegrade(model, move, step, maxSteps, score) {
+function calcBestMoveDegrade(model, move, stepsLeft, dont) {
     var score = model.score;
     if(move !== -1) { model.move(move) } ;
-    var newScore = model.score * (maxSteps - step);
-    if(move === 3) { return {score: newScore/step + score, move: move }; }
+    var modScore = mode.score * (stepsLeft);
+    if(move === 3) { return {score: modScore, move: move}; }
     
-    if(model.score === score && step > 0) { 
+    
+    if(model.score === score && stepsLeft !== steps) { 
         if(!model.couldMove) {
-            return {score: newScore, move: move};
+            return {score: modScore, move: move};
         }
     }
     
+    if(move === 2) { model.score -= model.score / (steps - stepsLeft + 1); }
+    
     if(model.lost()) {
-        return {score: newScore, move: move};
+        return {score: modScore, move: move};
     }
     
-    if(maxSteps - step < 1) {
-        return {score: ((!model.won) ? (newScore)  : maxScore - step*10), move: move}
+    if(stepsLeft < 1) {
+        return {score: ((!model.won) ? modScore : maxScore), move: move}
     }
     
-    if(model.won) { return { score: maxScore, move: move }; }
+    if(model.won) { return { score: maxScore + stepsLeft, move: move }; }
     
-    var winningMove = {score: (newScore), move: -1};
+    var winningMove = {score: modScore, move: -1};
     var curMove;
     for(var iter = 0; iter < 4; iter++) { //cycle through all moves
-            curMove = calcBestMoveDegrade(clone(model), iter, step + 1, steps, model.score/step + score);
+        if(iter !== dont) {
+            curMove = calcBestMoveDegrade(clone(model), iter, stepsLeft - 1, -1);
             if(curMove['score'] > winningMove['score']) {
                 winningMove = {score: curMove.score, move: iter};
             }
+        }
     }
     
     if(winningMove['move'] === -1) {
-        return {score: maxScore - step*10, move: getWeightedRandomMove()};
+        return {score: maxScore, move: getWeightedRandomMove()};
     }
     
     return winningMove;
