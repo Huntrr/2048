@@ -107,7 +107,9 @@ GameModel.prototype.move = function (direction) {
           tile.updatePosition(positions.next);
 
           // Update the score
-          self.score += merged.value;
+          if(merged.value > self.score) {
+            self.score = merged.value;
+          }
 
           // The mighty 2048 tile
           if (merged.value === 2048) self.won = true;
